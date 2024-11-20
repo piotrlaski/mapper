@@ -74,7 +74,6 @@ def sortav(hklspath, sortav_path, sortav_inp_path):
 
 #MAKEMAP functions:
 
-
 def readhkl(workpath):
     '''
     finds and imports a hkl file in the workpath
@@ -124,7 +123,6 @@ def readm50(workpath):
             cellparams = list(line[5:].split(' '))
             m50.close()
     return np.array(cellparams, dtype=np.float_)
-
 
 def sinthl(cell, h, k, l):
     '''
@@ -191,7 +189,6 @@ def finalize_fourier (templates_path, workpath):
     for i in range (result.shape[0]):
             pdif.write('{:>3}'.format('%.0f'% result[i,0]) + '{:>4}'.format('%.0f'% result[i,1]) + '{:>4}'.format('%.0f'% result[i,2]) + '{:>6}'.format('%.3f'% result[i,3]) + '{:>10}'.format('%.3f'% result[i,4]) + '{:>10}'.format('%.3f'% result[i,5]) + '{:>7}'.format('%.1f'% result[i,6]) + '{:>7}'.format('%.3f'% result[i,7]) + '{:>6}'.format('%.3f'% result[i,8]) + '{:>7}'.format('%.3f'% result[i,9]) + '{:>9}'.format('%.2f'% result[i,10]) + '{:>2}'.format('%.0f'% result[i,11]) + '\n')
     pdif.close()
-
 
 def change_mp_cwd(workpath, mp_ini_path):
     '''
@@ -548,7 +545,7 @@ def rescale(hklPath, cutoff_low = 0.5, cutoff_high = 1.5):
                     f.write(' ')
     #           Calculating Scaled Ratios 
                 RNScaled = CurrentHkl[i][3]
-                RScaled = 1 + (RNScaled - 1)*(AllAvgEta/SetAvgEta[Iteration])
+                RScaled = abs(1 + (RNScaled - 1)*(AllAvgEta/SetAvgEta[Iteration]))
                 f.write('{:>15}'.format(str('%.7f'%RScaled)))
                 f.write(' ')
     #           Calculating Scaled Sigmas
@@ -571,7 +568,6 @@ def glue(hklsPath):
             f.close()
     out.close()
     
-
 def imageSweep(path):
     try:
         os.mkdir(os.path.join(path, 'PD_maps'))
@@ -582,14 +578,13 @@ def imageSweep(path):
             if file[-4:] == '.png':
                  copyfile(os.path.join(root, file), os.path.join(path, 'PD_maps', file))
                 
-
 #EXECUTE
 
 #sortav config:
-template_path = os.path.normpath('C:\\Users\\Chrumo\\Desktop\\Scripts\\Rh1\\templates')
-hklspath = os.path.normpath('C:\\Users\\Chrumo\\Desktop\\Rh_refinement\\new_scaling_try\\att1\\new_scaling_try\\out\\mopro')
+template_path = os.path.normpath(r"C:\Users\piotr\Documents\VS_Code\working_dirs\agppps\AgPPPS_Maps\templates")
+hklspath = os.path.normpath(r"C:\Users\piotr\Documents\VS_Code\working_dirs\agppps\AgPPPS_Maps\250ns")
 
-mp_ini_path = os.path.normpath('C:\\Users\\Chrumo\\AppData\\Roaming\\mopro\\mopro.ini')
+mp_ini_path = os.path.normpath('C:\\Users\\piotr\\AppData\\Roaming\\mopro\\mopro.ini')
 
 sortav_path = os.path.join(template_path, 'sortav.exe')
 sortav_inp_path = os.path.join(template_path, 'sortav.inp')
